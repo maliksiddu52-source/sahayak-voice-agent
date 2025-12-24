@@ -7,7 +7,6 @@ from src.agent.brain import Brain
 from src.agent.state import AgentState
 from src.tools.api import search_schemes, check_eligibility, get_scheme_details
 
-# For Gemini, we pass the actual functions, not the JSON Schema.
 TOOLS = [search_schemes, check_eligibility, get_scheme_details]
 
 SYSTEM_PROMPT = """
@@ -38,7 +37,6 @@ class Agent:
         print(f"\n[User]: {user_text}")
         self.state.add_message("user", user_text)
         
-        # Reason and Act Loop
         # We allow up to 3 turns of tool usage before forcing a final answer
         for _ in range(5): 
             response_msg = self.brain.think(self.state.get_history(), tools=TOOLS)
@@ -49,7 +47,6 @@ class Agent:
                 # Execute tools
                 for tool_call in response_msg.tool_calls:
                     function_name = tool_call.function.name
-                    # Arguments are currently a JSON string because of our Brain adapter
                     arguments = json.loads(tool_call.function.arguments)
                     print(f"[Agent Action]: Calling {function_name} with {arguments}")
                     

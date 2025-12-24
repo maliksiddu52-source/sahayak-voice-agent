@@ -35,21 +35,16 @@ def check_eligibility(scheme_id: str, age: int, income: int, occupation: str, ge
         
     criteria = scheme['criteria']
     
-    # Check Age
     if not (criteria['min_age'] <= age <= criteria['max_age']):
         return {"eligible": False, "reason": f"Age {age} is not within {criteria['min_age']}-{criteria['max_age']} range."}
         
-    # Check Income
     if income > criteria.get('income_limit', float('inf')):
         return {"eligible": False, "reason": f"Income {income} exceeds limit {criteria['income_limit']}."}
         
-    # Check Occupation
     if criteria.get('occupation') != "any" and criteria.get('occupation') != occupation:
-         # Simplified check: allows 'any' or exact match
         if occupation != criteria['occupation']:
              return {"eligible": False, "reason": f"Occupation '{occupation}' does not match required '{criteria['occupation']}'."}
 
-    # Check Gender
     if criteria.get('gender') and criteria.get('gender') != gender:
         return {"eligible": False, "reason": f"Gender '{gender}' does not match required '{criteria['gender']}'."}
 

@@ -11,11 +11,9 @@ def listen(lang: str = "te-IN"):
     r = sr.Recognizer()
     with sr.Microphone() as source:
         print("Listening... (Speak now)")
-        # r.adjust_for_ambient_noise(source) # Optional: Adjust for background noise
         try:
             audio = r.listen(source, timeout=5, phrase_time_limit=10)
             print("Processing audio...")
-            # specific language code for Hindi India: hi-IN
             text = r.recognize_google(audio, language=lang)
             print(f"[Heard]: {text}")
             return text

@@ -1,5 +1,4 @@
 # Mock Database of Government Schemes
-# In a real app, this would be a SQL/Vector DB
 
 SCHEMES = [
     {
@@ -10,7 +9,7 @@ SCHEMES = [
         "benefits": "₹6,000 per year direct cash transfer.",
         "criteria": {
             "occupation": ["farmer"],
-            "income_limit": 2000000,  # High cap, but mainly landholding matters
+            "income_limit": 2000000, 
             "age_min": 18,
             "exclusion": "Institutional land holders, tax payers"
         }
@@ -34,8 +33,8 @@ SCHEMES = [
         "benefits": "Subsidy on home loan interest rates (CLSS) or financial assistance for house construction.",
         "criteria": {
             "location": "urban",
-            "income_max": 1800000, # EWS/LIG/MIG criteria apply
-            "property_ownership": "none"  # Should not own a pucca house
+            "income_max": 1800000, 
+            "property_ownership": "none"
         }
     },
     {

@@ -9,7 +9,7 @@ import json
 @dataclass
 class AgentState:
     history: List[Dict[str, str]] = field(default_factory=list)
-    user_profile: Dict[str, Any] = field(default_factory=dict) # To store age, income, etc.
+    user_profile: Dict[str, Any] = field(default_factory=dict)
     current_plan: str = ""
     
     def add_message(self, role: str, content: str):

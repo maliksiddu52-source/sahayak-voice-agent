@@ -12,7 +12,6 @@ load_dotenv()
 
 class Brain:
     def __init__(self):
-        # Configure Gemini
         api_key = os.getenv("GEMINI_API_KEY")
         if not api_key:
             print("Warning: GEMINI_API_KEY not found in environment variables.")
@@ -26,10 +25,7 @@ class Brain:
         Adapts the OpenAI-style history to Gemini's format.
         """
         try:
-            # Convert History to Gemini Format
-            # OpenAI: [{"role": "user", "content": "hi"}, ...]
-            # Gemini SDK handles 'user' and 'model'. System prompt is separate config.
-            
+
             contents = []
             system_instruction = None
 
@@ -45,9 +41,6 @@ class Brain:
                     role = 'model'
                     
                 if role == 'tool':
-                    # For tool outputs in manual loop, we simulate them as user context 
-                    # or part of the flow. The new SDK has chat sessions but for
-                    # stateless 'think' we do it manually.
                     role = 'user' 
                     content_text = f"Tool Output ({msg.get('name')}): {content_text}"
 
@@ -57,13 +50,10 @@ class Brain:
                         parts=[types.Part.from_text(text=content_text)]
                     ))
             
-            # Configure Tool Config if tools are present
             tool_config = None
             if tools:
-                # The SDK usually takes a list of functions directly in 'tools' argument
                 pass
 
-            # Generate Content
             response = self.client.models.generate_content(
                 model=self.model_name,
                 contents=contents,
@@ -88,18 +78,15 @@ class Brain:
         """
         from collections import namedtuple
         
-        # Define a simple ToolCall object
         ToolCall = namedtuple('ToolCall', ['id', 'function'])
         Function = namedtuple('Function', ['name', 'arguments'])
         Message = namedtuple('Message', ['content', 'tool_calls', 'role'])
 
         try:
-            # Check if we have candidates
             if not response.candidates:
                 return Message(content="I didn't get a response.", tool_calls=None, role="assistant")
 
             candidate = response.candidates[0]
-            # content_parts = candidate.content.parts
             
             text_content = ""
             tool_calls = []
@@ -114,7 +101,7 @@ class Brain:
                     args_json = json.dumps(fc.args)
                     
                     tool_calls.append(ToolCall(
-                        id="call_" + fc.name, # Dummy ID
+                        id="call_" + fc.name,
                         function=Function(name=fc.name, arguments=args_json)
                     ))
             

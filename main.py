@@ -7,7 +7,6 @@ from src.agent.workflow import Agent
 from src.voice.audio import get_audio_input, play_audio_output
 from colorama import init, Fore, Style
 
-# Initialize colorama
 init()
 
 def main():
@@ -25,7 +24,6 @@ def main():
             
             if not user_input:
                 print(Fore.RED + "No input detected. Trying again..." + Style.RESET_ALL)
-                # play_audio_output("Main sun nahi paaya. Kripya dubaara boliye.")
                 continue
                 
             if "exit" in user_input.lower() or "band karo" in user_input.lower() or "aapandi" in user_input.lower():
