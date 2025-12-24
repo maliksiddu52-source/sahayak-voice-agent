@@ -1,0 +1,7 @@
+google-genai
+SpeechRecognition
+gTTS
+pyaudio
+python-dotenv
+colorama
+playsound==1.2.2

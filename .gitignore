@@ -1,0 +1,8 @@
+venv/
+.env
+*.mp3
+*.wav
+*.whl
+src/agent/__pycache__
+src/tools/__pycache__
+
