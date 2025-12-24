@@ -1,21 +1,39 @@
 """
 Text-to-Speech (TTS) Module.
-Uses gTTS (Google Text-to-Speech) for Hindi support.
+Uses edge-tts (Microsoft Edge TTS) for faster and better quality voice.
 """
 import os
-from gtts import gTTS
+import subprocess
 import playsound
 
 def speak(text: str, lang: str = 'te'):
     """
-    Convert text to speech and play it.
+    Convert text to speech and play it using edge-tts CLI.
     """
     try:
         print(f"[Speaker]: {text}")
-        tts = gTTS(text=text, lang=lang, slow=False)
         filename = "temp_output.mp3"
-        tts.save(filename)
+        
+        voice = "te-IN-ShrutiNeural"
+        
+        rate = "+20%"
+        
+        command = [
+            "edge-tts",
+            "--voice", voice,
+            "--rate", rate,
+            "--text", text,
+            "--write-media", filename
+        ]
+        
+        result = subprocess.run(command, capture_output=True, text=True)
+        
+        if result.returncode != 0:
+            print(f"EdgeTTS Error: {result.stderr}")
+            return
+
         playsound.playsound(filename)
         os.remove(filename)
+        
     except Exception as e:
         print(f"Error in TTS: {e}")

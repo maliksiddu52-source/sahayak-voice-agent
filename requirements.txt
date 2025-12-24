@@ -5,3 +5,4 @@ pyaudio
 python-dotenv
 colorama
 playsound==1.2.2
+edge-tts
